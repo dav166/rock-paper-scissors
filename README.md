@@ -1,0 +1,2 @@
+We’re going to make a simple implementation of grade-school classic “rock paper scissors”.
+For the moment we’re just going to play the game from the browser console, but we will revisit this project later to add a Graphical User Interface with buttons and text.
