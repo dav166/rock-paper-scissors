@@ -12,9 +12,23 @@ function getComputerChoice() {
 
         // Important note: you want to return the results of this function call, not console.log() them. You’re going to use what you return later on, so let’s test this function by using console.log to see the results:
 
-        //  function playRound(playerSelection, computerSelection) {
-        //      your code here!
-        //  }
+function playRound(playerSelection, computerSelection) {
+    // Make the player's choice case-insensitive
+    playerSelection = playerSelection.toLowerCase();
+
+    // Compare choices and determine the winner
+    if (playerSelection === computerSelection.toLowerCase()) {
+        return "It's a draw!";
+    } else if (
+        (playerSelection === "rock" && computerSelection === "Scissors") ||
+        (playerSelection === "scissors" && computerSelection === "Paper") ||
+        (playerSelection === "paper" && computerSelection === "Rock")
+    ) {
+        return "You win! " + playerSelection + " beats " + computerSelection;
+    } else {
+        return "You lose! " + computerSelection + " beats " + playerSelection;
+    }
+}
 
         //  const playerSelection = "rock";
         //  const computerSelection = getComputerChoice();
