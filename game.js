@@ -25,10 +25,10 @@ function playRound(playerSelection) {
         (playerSelection === "scissors" && computerSelection === "Paper") ||
         (playerSelection === "paper" && computerSelection === "Rock")
     ) {
-        result = "You win! " + capitalizeFirstLetter(playerSelection) + " beats " + computerSelection.toLowerCase();
+        result = "You win! " + capitalizeFirstLetter(playerSelection) + " beats " + computerSelection.toLowerCase() + ".";
         updateScore('player');
     } else {
-        result = "You lose! " + capitalizeFirstLetter(computerSelection) + " beats " + playerSelection;
+        result = "You lose! " + capitalizeFirstLetter(computerSelection) + " beats " + playerSelection + ".";
         updateScore('computer');
     }
     document.getElementById("results").textContent = result;
