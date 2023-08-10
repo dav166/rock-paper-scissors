@@ -87,17 +87,13 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function resetGame() {
-    playerScore = 0;
-    computerScore = 0;
-    targetScore = 0;
-
     // Update the displayed scores
-    document.getElementById("score").textContent = `Player: ${playerScore} | Computer: ${computerScore}`;
+    document.getElementById("score").textContent = `Final Score - Player: ${playerScore} | Computer: ${computerScore}`;
 
     // Hide the main game screen
     document.getElementById("gameScreen").style.display = "none";
 
-    // Show the start screen
+    // Show the start screen with post-game options
     document.getElementById("startScreen").style.display = "block";
 
     let postGameContainer = document.getElementById("postGameContainer");
@@ -111,9 +107,24 @@ function resetGame() {
     }
 
     let postGameMessage= document.createElement("p");
-    postGameMessage.textContent = "Would you like to play again? Choose a game type or quit.";
+    if (playerScore > computerScore) {
+        postGameMessage.textContent = "Congratulations! You won!";
+    } else {
+        postGameMessage.textContent = "Better luck next time!";
+    }
     postGameContainer.appendChild(postGameMessage);
 
+    let playAgainButton = document.createElement("button");
+    playAgainButton.textContent = "Play Again";
+    playAgainButton.addEventListener("click", function() {
+        playerScore = 0;
+        computerScore = 0;
+        targetScore = 0;
+        postGameContainer.remove(); // Remove the post-game container
+        document.getElementById("score").textContent = `Player: ${playerScore} | Computer: $(computerScore)`;
+    });
+    postGameContainer.appendChild(playAgainButton);
+    
     let quitButton = document.createElement("button");
     quitButton.textContent = "Quit";
     quitButton.addEventListener("click", function() {
