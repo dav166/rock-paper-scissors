@@ -9,7 +9,7 @@ const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.
 
 const getComputerChoice = () => choices[Math.floor(Math.random() * 3)];
 
-const setTargetScore = gameType => gameType === 3 ? 3:5;
+const setTargetScore = gameType => gameType === 3 ? 3 : 5;
 
 // --- Core Game Logic --- //
 const playRound = playerSelection => {
@@ -26,10 +26,10 @@ const playRound = playerSelection => {
         (playerSelection === "scissors" && computerSelection === "Paper") ||
         (playerSelection === "paper" && computerSelection === "Rock")
     ) {
-        result = `You win! $(capitalizeFirstLetter(playerSelection)) beats $(computerSelection.toLowerCase()).`;
+        result = `You win! ${capitalizeFirstLetter(playerSelection)} beats ${computerSelection.toLowerCase()}.`;
         updateScore('player');
     } else {
-        result = `You lose! $(capitalizeFirstLetter(computerSelection)) beats $(playerSelection)`;
+        result = `You lose! ${capitalizeFirstLetter(computerSelection)} beats ${playerSelection}`;
         updateScore('computer');
     }
     document.getElementById("results").textContent = result;
@@ -37,8 +37,8 @@ const playRound = playerSelection => {
 
 const updateScore = winner => {
     winner === 'player' ? playerScore++ : computerScore++;
-
-    document.getElementById("score").textContent = `Player: $(playerScore) | Computer: $(computerScore)`;
+    console.log("Current scores - Player:", playerScore, "Computer:", computerScore, "Target:", targetScore);
+    document.getElementById("score").textContent = `Player: ${playerScore} | Computer: ${computerScore}`;
 
     if (playerScore === targetScore || computerScore === targetScore) {
         document.getElementById("results").textContent = playerScore === targetScore ? "Congratulations! You win the game!" : "Oh no! The computer wins!";
@@ -48,6 +48,7 @@ const updateScore = winner => {
 
 const startGame = gameType => {
     [playerScore, computerScore, targetScore] = [0, 0, setTargetScore(gameType)];
+    console.log("Starting game with target score:", targetScore);
 
     document.getElementById("score").textContent = `Player: ${playerScore} | Computer: ${computerScore}`;
     document.getElementById("startScreen").style.display = "none";
@@ -56,7 +57,10 @@ const startGame = gameType => {
 };
 
 const resetGame = () => {
-    const postGameContainer = document.getElementById("postGameContainer");
+    playerScore = 0;
+    computerScore = 0;
+    const postGameContainer = document.getElementById("postGameContainer") || createPostGameOptions();
+
     postGameContainer.innerHTML = '';
 
     let postGameMessage = document.createElement("p");
@@ -66,11 +70,7 @@ const resetGame = () => {
     const playAgainButton = document.createElement("button");
     playAgainButton.textContent = "Play Again";
     playAgainButton.addEventListener("click", function() {
-        playerScore = 0;
-        computerScore = 0;
-        targetScore = 0;
-        postGameContainer.remove();
-        document.getElementById("score").textContent = `Player: ${playerScore} | Computer: $(computerScore)`;
+        startGame(targetScore); // Restart the game with the same game type
     });
     postGameContainer.appendChild(playAgainButton);
 
@@ -80,12 +80,25 @@ const resetGame = () => {
         window.close();
     });
     postGameContainer.appendChild(quitButton);
+
+    // Hide the game screen and show the start screen
+    document.getElementById("gameScreen").style.display = "none";
+    document.getElementById("startScreen").style.display = "block";
 };
 
 const createPostGameOptions = () => {
-    const postGameContainer = document.createElement("div");
-    postGameContainer.id = "postGameContainer";
-    document.getElementById("startScreen").appendChild(postGameContainer);
+    let postGameContainer = document.getElementById("postGameContainer");
+
+    // If the postGameContainer doesn't exist, create it
+    if (!postGameContainer) {
+        postGameContainer = document.createElement("div");
+        postGameContainer.id = "postGameContainer";
+        document.getElementById("startScreen").appendChild(postGameContainer);
+    } else {
+        // If it does exist, clear its contents
+        postGameContainer.innerHTML = '';
+    }
+    
     return postGameContainer;
 };
 
@@ -95,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("paper").addEventListener("click", () => playRound("paper"));
     document.getElementById("scissors").addEventListener("click", () => playRound("scissors"));
 
-    document.querySelectorAll("[data-game-type").forEach(button => {
+    document.querySelectorAll("[data-game-type]").forEach(button => {
         button.addEventListener("click", function() {
             const gameType = parseInt(this.getAttribute("data-game-type"));
             startGame(gameType);
