@@ -1,39 +1,16 @@
-let targetScore = 0; // Set default values
+// Constants and Variables
+const choices = ['Rock', 'Paper', 'Scissors'];
+let targetScore = 0; 
 let playerScore = 0;
 let computerScore = 0;
 
-function startGame(gameType) {
-    // Reset scores
-    playerScore = 0;
-    computerScore = 0;
-    document.getElementById("score").textContent = `Player: ${playerScore} | Computer: ${computerScore}`;
+// Utility functions
+const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
 
-    document.getElementById("startScreen").style.display = "none";
-    document.getElementById("gameScreen").style.display = "block";
-    document.getElementById("gameType").textContent = `First to ${gameType}`;
+// Game functions
+const getComputerChoice = () => choices[Math.floor(Math.random() * 3)];
 
-    // Set the target score based on game type
-    if (gameType === 3) {
-        targetScore = 3;
-    } else if (gameType === 5) {
-        targetScore = 5;
-    }
-    console.log("Game started with target score:", targetScore);
-}
-
-// Define the choices
-const choices = ['Rock', 'Paper', 'Scissors'];
-
-// Function to get the computer's choice
-function getComputerChoice() {
-    const randomIndex = Math.floor(Math.random() * 3);
-    return choices[randomIndex];
-}
-
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
-}
-function playRound(playerSelection) {
+const playRound = (playerSelection) => {
     const computerSelection = getComputerChoice();
     // Make the player's choice case-insensitive
     playerSelection = playerSelection.toLowerCase();
@@ -54,9 +31,9 @@ function playRound(playerSelection) {
         updateScore('computer');
     }
     document.getElementById("results").textContent = result;
-}
+};
 
-function updateScore(winner) {
+const updateScore = (winner) => {
     if (winner === 'player') {
         playerScore++;
     } else if (winner === 'computer') {
@@ -71,22 +48,28 @@ function updateScore(winner) {
         resetGame();
     }
     console.log("Updating score. Player:", playerScore, "Computer:", computerScore);
-}
+};
 
-document.addEventListener("DOMContentLoaded", function() {
-    // Add event listeners to buttons
-    document.getElementById("rock").addEventListener("click", function() {
-        playRound("rock");
-    });
-    document.getElementById("paper").addEventListener("click", function() {
-        playRound("paper");
-    });
-    document.getElementById("scissors").addEventListener("click", function() {
-        playRound("scissors");
-    });
-});
+const startGame = (gameType) => {
+    // Reset scores
+    playerScore = 0;
+    computerScore = 0;
+    document.getElementById("score").textContent = `Player: ${playerScore} | Computer: ${computerScore}`;
 
-function resetGame() {
+    document.getElementById("startScreen").style.display = "none";
+    document.getElementById("gameScreen").style.display = "block";
+    document.getElementById("gameType").textContent = `First to ${gameType}`;
+
+    // Set the target score based on game type
+    if (gameType === 3) {
+        targetScore = 3;
+    } else if (gameType === 5) {
+        targetScore = 5;
+    }
+    console.log("Game started with target score:", targetScore);
+};
+
+const resetGame = () => {
     // Update the displayed scores
     document.getElementById("score").textContent = `Final Score - Player: ${playerScore} | Computer: ${computerScore}`;
 
@@ -124,11 +107,28 @@ function resetGame() {
         document.getElementById("score").textContent = `Player: ${playerScore} | Computer: $(computerScore)`;
     });
     postGameContainer.appendChild(playAgainButton);
-    
+
     let quitButton = document.createElement("button");
     quitButton.textContent = "Quit";
     quitButton.addEventListener("click", function() {
         window.close();
     });
     postGameContainer.appendChild(quitButton);
-}
+};
+
+document.addEventListener("DOMContentLoaded", function() {
+    const rockButton = document.getElementById("rock");
+    const paperButton = document.getElementById("paper");
+    const scissorsButton = document.getElementById("scissors");
+    const gameTypeButtons = document.querySelectorAll("[data-game-type");
+
+    rockButton.addEventListener("click", () => playRound("rock"));
+    paperButton.addEventListener("click", () => playRound("paper"));
+    scissorsButton.addEventListener("click", () => playRound("scissors"));
+    gameTypeButtons.forEach(button => {
+        button.addEventListener("click", function() {
+            const gameType = parseInt(this.getAttribute("data-game-type"));
+            startGame(gameType);
+        });
+    });
+});

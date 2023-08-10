@@ -9,26 +9,22 @@
 </head>
 <body>
     <!-- Start Screen -->
-    <div id="startScreen">
+    <div id="startScreen" role="dialog">
         <h2>Select Game Type</h2>
-        <button onClick="startGame(3)">First to 3</button>
-        <button onClick="startGame(5)">First to 5</button>
+        <button data-game-type="3">First to 3</button>
+        <button data-game-type="5">First to 5</button>
         <!-- Add more buttons in future as needed -->
     </div>
 
     <!-- Main Game Screen (initially hidden) -->
-    <div id="gameScreen" style="display: none;">
+    <div id="gameScreen" role="main" aria-hidden="true" style="display: none;">
         <div id="gameType"></div>
-        <!-- Game Controls -->
         <button id="rock">Rock</button>
         <button id="paper">Paper</button>
         <button id="scissors">Scissors</button>
-
-        <!-- Display area for results and score -->
         <div id="results"></div>
         <div id="score">Player: 0 | Computer: 0</div>
     </div>
-
 
     <script src="game.js"></script>
 </body>

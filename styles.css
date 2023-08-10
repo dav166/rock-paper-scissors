@@ -1,8 +1,14 @@
 body {
-    font-family: 'Press Start 2P', cursive; /* This is a pixelated font available on Google Fonts */
+    font-family: 'Press Start 2P', cursive;
     background-color: #222;
     color: #FFF;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    word-wrap: balance;
 }
 
 button {
@@ -12,13 +18,18 @@ button {
     cursor: pointer;
     margin: 5px;
     color: #FFF;
+    transition: background-color 0.3s;
 }
 
 button:hover {
     background-color: #666;
 }
+#gameType, #results {
+    margin: 20px;
+    font-size: 30px;
+}
 
-#results, #score {
-    font-size: 20px;
+#score {
+    font-size: 15px;
     margin-top: 20px;
 }
