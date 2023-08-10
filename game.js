@@ -7,6 +7,10 @@ function getComputerChoice() {
     return choices[randomIndex];
 }
 
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+}
+
 function playRound(playerSelection) {
     const computerSelection = getComputerChoice();
     // Make the player's choice case-insensitive
@@ -21,10 +25,10 @@ function playRound(playerSelection) {
         (playerSelection === "scissors" && computerSelection === "Paper") ||
         (playerSelection === "paper" && computerSelection === "Rock")
     ) {
-        result = "You win! " + playerSelection + " beats " + computerSelection;
+        result = "You win! " + capitalizeFirstLetter(playerSelection) + " beats " + computerSelection.toLowerCase();
         updateScore('player');
     } else {
-        result = "You lose! " + computerSelection + " beats " + playerSelection;
+        result = "You lose! " + capitalizeFirstLetter(computerSelection) + " beats " + playerSelection;
         updateScore('computer');
     }
     document.getElementById("results").textContent = result;
