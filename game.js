@@ -39,15 +39,15 @@ function updateScore(winner) {
     } else if (winner === 'computer') {
         computerScore++;
     }
-    document.getElementById("score").textContent = 'Player: $(playerScore) | Computer: $(computerScore)';
+    document.getElementById("score").textContent = `Player: ${playerScore} | Computer: ${computerScore}`;
 
     if (playerScore === 5 || computerScore === 5) {
         const winner = playerScore === 5 ? "Player" : "Computer";
-        document.getElementById("results").textContent = '$(winner) wins the game!';
+        document.getElementById("results").textContent = `${winner} wins the game!`;
         // Reset scores
         playerScore = 0;
         computerScore = 0;
-        document.getElementById("score").textContent = 'Player: $(playerScore) | Computer: $(computerScore)';
+        document.getElementById("score").textContent = `Player: ${playerScore} | Computer: ${computerScore}`;
     }
 }
 
