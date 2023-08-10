@@ -8,14 +8,26 @@
     <title>Rock Paper Scissors</title>
 </head>
 <body>
-    <!-- Game Controls -->
-    <button id="rock">Rock</button>
-    <button id="paper">Paper</button>
-    <button id="scissors">Scissors</button>
+    <!-- Start Screen -->
+    <div id="startScreen">
+        <h2>Select Game Type</h2>
+        <button onClick="startGame(3)">First to 3</button>
+        <button onClick="startGame(5)">First to 5</button>
+        <!-- Add more buttons in future as needed -->
+    </div>
 
-    <!-- Display area for results and score -->
-    <div id="results"></div>
-    <div id="score">Player: 0 | Computer: 0</div>
+    <!-- Main Game Screen (initially hidden) -->
+    <div id="gameScreen" style="display: none;">
+        <!-- Game Controls -->
+        <button id="rock">Rock</button>
+        <button id="paper">Paper</button>
+        <button id="scissors">Scissors</button>
+
+        <!-- Display area for results and score -->
+        <div id="results"></div>
+        <div id="score">Player: 0 | Computer: 0</div>
+    </div>
+
 
     <script src="game.js"></script>
 </body>
