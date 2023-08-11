@@ -57,33 +57,39 @@ const startGame = gameType => {
 };
 
 const resetGame = () => {
-    playerScore = 0;
-    computerScore = 0;
-    const postGameContainer = document.getElementById("postGameContainer") || createPostGameOptions();
+    const gameScreen = document.getElementById("gameScreen");
+    const endGameScreen = document.createElement("div");
+    endGameScreen.id = "endGameScreen";
+    document.body.appendChild(endGameScreen);
 
-    postGameContainer.innerHTML = '';
+    // Announce the winner
+    const winnerMessage = document.createElement("p");
+    winnerMessage.textContent = playerScore === targetScore ? "Congratulations! You won!" : "Better luck next time!";
+    endGameScreen.appendChild(winnerMessage);
 
-    let postGameMessage = document.createElement("p");
-    postGameMessage.textContent = playerScore > computerScore ? "Congratulations! You won!" : "Better luck next time!";
-    postGameContainer.appendChild(postGameMessage);
-
+    // Play Again button
     const playAgainButton = document.createElement("button");
     playAgainButton.textContent = "Play Again";
     playAgainButton.addEventListener("click", function() {
-        startGame(targetScore); // Restart the game with the same game type
-    });
-    postGameContainer.appendChild(playAgainButton);
+        endGameScreen.remove(); // Remove the end-game screen
 
+        // Reset game state and UI elements
+        [playerScore, computerScore, targetScore] = [0, 0, 0];
+        document.getElementById("results").textContent = ""; // Clear the result message
+        document.getElementById("score").textContent = `Player: ${playerScore} | Computer: ${computerScore}`;
+        document.getElementById("startScreen").style.display = "block"; // Display the start screen
+    });
+    endGameScreen.appendChild(playAgainButton);
+
+    // Quit button
     const quitButton = document.createElement("button");
     quitButton.textContent = "Quit";
     quitButton.addEventListener("click", function() {
         window.close();
     });
-    postGameContainer.appendChild(quitButton);
+    endGameScreen.appendChild(quitButton);
 
-    // Hide the game screen and show the start screen
-    document.getElementById("gameScreen").style.display = "none";
-    document.getElementById("startScreen").style.display = "block";
+    gameScreen.style.display = "none"; // Hide the main game screen
 };
 
 const createPostGameOptions = () => {
